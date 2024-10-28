@@ -145,7 +145,7 @@ write_dardar_flex <- function(df_dardar_flex, fn_dardar, fn_out) {
                 vardef_lat_orig, vardef_lon_orig)
 
   if(file.exists(fn_out)) null <- file.remove(fn_out)
-  nc_new <- ncdf4::nc_create(fn_out, l_var, force_v4 = TRUE, verbose = TRUE)
+  nc_new <- ncdf4::nc_create(fn_out, l_var, force_v4 = TRUE)
 
   ## Put data into variables
   ncdf4::ncvar_put(nc_new, vardef_lat, var_lat)
