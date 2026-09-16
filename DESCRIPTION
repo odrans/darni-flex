@@ -11,11 +11,13 @@ License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Imports:
+    baseutils,
     dplyr,
     ncdf4,
     reshape2,
     plotutils
 Remotes:
-    jmuelmen/plotutils
+    jmuelmen/plotutils,
+    odrans/baseutils
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2

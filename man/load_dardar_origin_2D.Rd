@@ -14,7 +14,7 @@ load_dardar_origin_2D(fn_dardar_origin, lf_dardar, lf_dardar_flux)
 \item{lf_dardar_flux}{A character vector containing the list of available DARDAR CRE NetCDF file paths.}
 }
 \value{
-A data frame containing combined cloud properties from the DARDAR and DARDAR origin files, including latitude, longitude, ice water path (IWP), ice concentration (ICNC), cloud top temperature (CTT), and cloud radiative effects (CRE).
+A data frame containing combined cloud properties from the DARDAR and DARDAR origin files, including latitude, longitude, ice water path (IWP), ice concentration (ICNC), cloud top temperature (CTT), cloud radiative effects (CRE), and season (DJF, MAM, JJA or SON).
 
 A processed data frame with key cloud properties and radiative effects.
 }

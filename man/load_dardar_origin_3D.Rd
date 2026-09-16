@@ -12,7 +12,7 @@ load_dardar_origin_3D(fn_dardar_origin, lf_dardar)
 \item{lf_dardar}{A character vector containing the list of available DARDAR files.}
 }
 \value{
-A data frame containing the processed DARDAR origin data combined with the DARDAR file, including cloud properties, ice water content (IWC), and temperature at ice formation.
+A data frame containing the processed DARDAR origin data combined with the DARDAR file, including cloud properties, ice water content (IWC), temperature at ice formation, and season (DJF, MAM, JJA or SON).
 }
 \description{
 This function loads DARDAR origin and corresponding DARDAR data from NetCDF files, processes key variables such as origin, cloud properties, ice water content (IWC), and temperature. It filters the data based on cloud masks and mixed-phase flags and returns the processed data.

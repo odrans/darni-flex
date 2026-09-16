@@ -6,7 +6,7 @@
 #' @param lf_dardar A character vector containing the list of available DARDAR NetCDF file paths.
 #' @param lf_dardar_flux A character vector containing the list of available DARDAR CRE NetCDF file paths.
 #'
-#' @return A data frame containing combined cloud properties from the DARDAR and DARDAR origin files, including latitude, longitude, ice water path (IWP), ice concentration (ICNC), cloud top temperature (CTT), and cloud radiative effects (CRE).
+#' @return A data frame containing combined cloud properties from the DARDAR and DARDAR origin files, including latitude, longitude, ice water path (IWP), ice concentration (ICNC), cloud top temperature (CTT), cloud radiative effects (CRE), and season (DJF, MAM, JJA or SON).
 #'
 #' @details
 #' The function attempts to match the DARDAR origin file with the corresponding DARDAR and DARDAR flux files based on the file name. It verifies that the dimensions of these files are consistent, then extracts and combines cloud-related data such as origin, IWC, ice concentration, temperature, and cloud radiative effects. Data is filtered based on cloud mask, mixed-phase flags, and iteration flags.
@@ -69,10 +69,12 @@ load_dardar_origin_2D <- function(fn_dardar_origin, lf_dardar, lf_dardar_flux) {
              lon = c(ncdf4::ncvar_get(nc_dardar, "lon"))[idx_time],
              cre_ice_sw = c(ncdf4::ncvar_get(nc_dardar_flux, "cre_ice_sw"))[idx_time],
              cre_ice_lw = c(ncdf4::ncvar_get(nc_dardar_flux, "cre_ice_lw")[idx_time]),
-             iteration_flag =  c(ncdf4::ncvar_get(nc_dardar, "iteration_flag")[idx_time])
+             iteration_flag =  c(ncdf4::ncvar_get(nc_dardar, "iteration_flag")[idx_time]),
+             time = ncdf4::ncvar_get(nc_dardar, "dtime")[idx_time] + ncdf4::ncvar_get(nc_dardar, "base_time") + as.POSIXct("1970-01-01"),
+             season = baseutils::time2season(time)
            ) %>%
     dplyr::filter(iteration_flag == 1) %>%
-    dplyr::select(-c(layer_index, iteration_flag))
+    dplyr::select(-c(layer_index, iteration_flag, time))
 
 
   ncdf4::nc_close(nc_dardar_origin)
@@ -91,7 +93,7 @@ load_dardar_origin_2D <- function(fn_dardar_origin, lf_dardar, lf_dardar_flux) {
 #' @param fn_dardar_origin A character string specifying the file path to the DARDAR origin NetCDF file.
 #' @param lf_dardar A character vector containing the list of available DARDAR files.
 #'
-#' @return A data frame containing the processed DARDAR origin data combined with the DARDAR file, including cloud properties, ice water content (IWC), and temperature at ice formation.
+#' @return A data frame containing the processed DARDAR origin data combined with the DARDAR file, including cloud properties, ice water content (IWC), temperature at ice formation, and season (DJF, MAM, JJA or SON).
 #'
 #' @details
 #' This function matches the DARDAR origin file to the corresponding DARDAR file and reads both to extract key variables. It filters the data for valid cloud layers and non-mixed-phase clouds and combines the data into a single data frame.
@@ -140,10 +142,12 @@ load_dardar_origin_3D <- function(fn_dardar_origin, lf_dardar) {
              lat = c(ncdf4::ncvar_get(nc_dardar, "lat"))[idx_time],
              lon = c(ncdf4::ncvar_get(nc_dardar, "lon"))[idx_time],
              height = c(ncdf4::ncvar_get(nc_dardar, "height"))[idx_height],
-             iteration_flag =  c(ncdf4::ncvar_get(nc_dardar, "iteration_flag")[idx_time])
+             iteration_flag =  c(ncdf4::ncvar_get(nc_dardar, "iteration_flag")[idx_time]),
+             time = ncdf4::ncvar_get(nc_dardar, "dtime")[idx_time] + ncdf4::ncvar_get(nc_dardar, "base_time") + as.POSIXct("1970-01-01"),
+             season = baseutils::time2season(time)
            ) %>%
     dplyr::filter(iteration_flag == 1) %>%
-    dplyr::select(-c(iteration_flag, flag_mixed, clm))
+    dplyr::select(-c(iteration_flag, flag_mixed, clm, time))
 
   ncdf4::nc_close(nc_dardar_origin)
   ncdf4::nc_close(nc_dardar)
