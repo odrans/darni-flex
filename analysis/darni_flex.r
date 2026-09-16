@@ -3,27 +3,27 @@ library(ggplot2)
 library(doMC); registerDoMC(cores = 40)
 library(patchwork)
 
-dir_main <- "/home/b/b380333/tmp/dardar_flex"
-dir_rds <- "/home/b/b380333/storage/scratch/tmp/dardar_flex_rds"
+dir_main <- "analysis"
+dir_rds <- file.path(Sys.getenv("DARNI_SCRATCH", file.path(Sys.getenv("HOME"), "storage", "scratch")), "tmp/dardar_flex_rds")
 
-source(paste0(dir_main, "/utils.r"))
-source(paste0(dir_main, "/find_origin.r"))
-source(paste0(dir_main, "/read_flexpart.r"))
-source(paste0(dir_main, "/read_dardar.r"))
-source(paste0(dir_main, "/load_data.r"))
-source(paste0(dir_main, "/merge_flex_dardar.r"))
-source(paste0(dir_main, "/write_dardar_flex.r"))
+source("R/utils.r")
+source("R/find_origin.r")
+source("R/read_flexpart.r")
+source("R/read_dardar.r")
+source("R/load_data.r")
+source("R/merge_flex_dardar.r")
+source("R/write_dardar_flex.r")
 source(paste0(dir_main, "/load_dardar_origin.r"))
 
-dir_dardar <- "/home/b/b380333/storage/data/satellite/DARDAR-Nice/DARNI_L2_PRO.v2.0/2010"
+dir_dardar <- file.path(Sys.getenv("DARNI_WORK", file.path(Sys.getenv("HOME"), "storage", "work")), "data/satellite/DARDAR-Nice/DARNI_L2_PRO.v2.0/2010")
 lf_dardar <- list.files(dir_dardar, full.names = TRUE, recursive = TRUE, pattern = ".nc")
 
-dir_dardar_flux <- "/home/b/b380333/storage/data/satellite/DARDAR-Nice/AUX/ecrad/dar2era_v1.10/output/2010"
+dir_dardar_flux <- file.path(Sys.getenv("DARNI_WORK", file.path(Sys.getenv("HOME"), "storage", "work")), "data/satellite/DARDAR-Nice/AUX/ecrad/dar2era_v1.10/output/2010")
 
-dir_flex <- "/home/b/b380333/storage/scratch/data/model/FLEXPART"
+dir_flex <- file.path(Sys.getenv("DARNI_SCRATCH", file.path(Sys.getenv("HOME"), "storage", "scratch")), "data/model/FLEXPART")
 lf_flex <- list.files(dir_flex, full.names = TRUE, recursive = TRUE, pattern = ".nc")
 
-dir_dardar_origin <- "/home/b/b380333/storage/scratch/tmp/dardar_flex"
+dir_dardar_origin <- file.path(Sys.getenv("DARNI_SCRATCH", file.path(Sys.getenv("HOME"), "storage", "scratch")), "tmp/dardar_flex")
 
 ## null <- plyr::ldply(lf_flex[206], load_data, lf_dardar = lf_dardar, dir_out = dir_dardar_origin, overwrite = TRUE, .parallel = TRUE)
 

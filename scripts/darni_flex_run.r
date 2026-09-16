@@ -4,9 +4,9 @@ library(dplyr)
 library(doMC); registerDoMC(cores = 10)
 
 ## Edit the repository if needed
-dir_dardar <- "/home/b/b380333/storage/data/satellite/DARDAR-Nice/DARNI_L2_PRO.v2.0/2010" # Directory where the DARDAR files are stored
-dir_flex <- "/home/b/b380333/storage/scratch/data/model/FLEXPART" # Directory where the FLEXPART files are stored
-dir_dardar_origin <- "/home/b/b380333/storage/scratch/tmp/dardar_flex" # Directory where the output files will be stored
+dir_dardar <- file.path(Sys.getenv("DARNI_WORK", file.path(Sys.getenv("HOME"), "storage", "work")), "data/satellite/DARDAR-Nice/DARNI_L2_PRO.v2.0/2010") # Directory where the DARDAR files are stored
+dir_flex <- file.path(Sys.getenv("DARNI_SCRATCH", file.path(Sys.getenv("HOME"), "storage", "scratch")), "data/model/FLEXPART") # Directory where the FLEXPART files are stored
+dir_dardar_origin <- file.path(Sys.getenv("DARNI_SCRATCH", file.path(Sys.getenv("HOME"), "storage", "scratch")), "tmp/dardar_flex") # Directory where the output files will be stored
 
 ## List the files
 lf_dardar <- list.files(dir_dardar, full.names = TRUE, recursive = TRUE, pattern = ".nc")
